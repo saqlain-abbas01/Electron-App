@@ -1,0 +1,12 @@
+{
+  "appId": "my-app",
+  "files": ["dist-electron", "dist-react"],
+  "extraResources": ["dist-electron/preload.cjs", "src/assests/***"],
+  "icon": "./assests/react.svg",
+  "mac": {
+    "target": "dmg"
+  },
+  "win": {
+    "target": ["portable", "msi"]
+  }
+}
