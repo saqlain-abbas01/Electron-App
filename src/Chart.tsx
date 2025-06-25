@@ -22,7 +22,7 @@ export function Chart(props: ChartProps) {
       ),
     ];
   }, [props.data, props.maxDataPoints]);
-  //   console.log("prepared data", preparedData);
+
   return (
     <BaseChart data={preparedData} fill={color.fill} stroke={color.stroke} />
   );

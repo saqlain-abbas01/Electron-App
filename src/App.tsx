@@ -22,7 +22,7 @@ function App() {
     () => statistics.map((stat) => stat.data.storageUsage),
     [statistics]
   );
-  // console.log("cpuUsages", cpuUsages);
+
   const activeUsages = useMemo(() => {
     switch (activeView) {
       case "CPU":
