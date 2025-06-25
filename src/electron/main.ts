@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import { isDev } from "./utils.js";
+import { handleCloseWindow, isDev } from "./utils.js";
 import { pollResources, getStaticData } from "./resourceManager.js";
 import { getPreLoadPath } from "./pathResolver.js";
 import { createMenu } from "./menu.js";
@@ -13,7 +13,7 @@ app.on("ready", () => {
       preload: getPreLoadPath(),
     },
   });
-  console.log("isDev", isDev);
+
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");
   } else {
@@ -24,6 +24,7 @@ app.on("ready", () => {
   ipcMain.handle("getStaticData", () => {
     return getStaticData();
   });
+
   ipcMain.on("sendFrameAction", (event, payload) => {
     switch (payload) {
       case "CLOSE":
@@ -41,20 +42,3 @@ app.on("ready", () => {
   handleCloseWindow(mainWindow);
   createMenu(mainWindow);
 });
-
-function handleCloseWindow(mainWindow: BrowserWindow) {
-  let willClose = false;
-  mainWindow.on("close", (e) => {
-    if (willClose) {
-      return mainWindow.close();
-    }
-    e.preventDefault();
-    mainWindow.hide();
-  });
-  app.on("before-quit", () => {
-    willClose = true;
-  });
-  mainWindow.on("show", () => {
-    willClose = false;
-  });
-}
